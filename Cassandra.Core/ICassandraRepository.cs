@@ -35,6 +35,12 @@
         Task<IEnumerable<TEntity>> GetAllAsync();
 
         /// <summary>
+        /// It returns all records synchronously as an IEnumerable<TEntity>.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<TEntity> GetAll();
+
+        /// <summary>
         /// It asynchronously returns the model based on the ID value
         /// </summary>
         /// <param name="id"></param>
@@ -49,6 +55,6 @@
         /// <returns></returns>
         Task UpdateAsync(string id, TEntity entity);
 
-       
+
     }
 }

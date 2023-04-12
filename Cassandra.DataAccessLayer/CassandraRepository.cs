@@ -63,6 +63,12 @@ namespace Cassandra.DataAccessLayer
         }
 
         /// <summary>
+        /// It returns all records synchronously as an IEnumerable<TEntity>.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<TEntity> GetAll() => ListSelectBase(_session.Execute(ListBase()));
+
+        /// <summary>
         /// It asynchronously performs the operation of adding a new record.
         /// </summary>
         /// <param name="entity"></param>
