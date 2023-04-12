@@ -26,7 +26,7 @@ var user = new User
 };
 
 ICassandraRepository<User> repository = new CassandraRepository<User>
-                                            ("demo", "localhost");
+                                            ("demo");
 
 //Insert
 await repository.AddAsync(user);
