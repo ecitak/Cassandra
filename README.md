@@ -29,9 +29,11 @@ ICassandraRepository<User> repository = new CassandraRepository<User>
                                             ("demo");
 
 //Insert
-await repository.AddAsync(user);
+await repository
+      .AddAsync(user);
 
 //Get All
-var users = await repository.GetAllAsync();
+var users = await repository
+                  .GetAllAsync();
 ```
 
