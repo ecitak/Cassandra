@@ -84,6 +84,13 @@ namespace Cassandra.DataAccessLayer
         /// <returns></returns>
         public Task UpdateAsync(string id, TEntity entity) => _session.ExecuteAsync(UpdateBase(id, entity));
 
+        /// <summary>
+        /// It performs the operation of updating a record synchronously.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="entity"></param>
+        public void Update(string id, TEntity entity) => _session.Execute(UpdateBase(id, entity));
+
         #region Base
         //The Base region contains common operations that both synchronous and asynchronous operations will execute. 
 

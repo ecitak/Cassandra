@@ -55,6 +55,12 @@
         /// <returns></returns>
         Task UpdateAsync(string id, TEntity entity);
 
+        /// <summary>
+        /// It performs the operation of updating a record synchronously.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="entity"></param>
+        void Update(string id, TEntity entity);
 
     }
 }
