@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cassandra.Core", "Cassandra.Core\Cassandra.Core.csproj", "{8BA72219-38C1-43B2-9284-E20929C52CA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cassandra.DataAccessLayer", "Cassandra.DataAccessLayer\Cassandra.DataAccessLayer.csproj", "{FCC849B5-56E2-4831-996B-F7D6F80C73FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8BA72219-38C1-43B2-9284-E20929C52CA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BA72219-38C1-43B2-9284-E20929C52CA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BA72219-38C1-43B2-9284-E20929C52CA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC849B5-56E2-4831-996B-F7D6F80C73FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC849B5-56E2-4831-996B-F7D6F80C73FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC849B5-56E2-4831-996B-F7D6F80C73FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC849B5-56E2-4831-996B-F7D6F80C73FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cassandra.Core
+﻿namespace Cassandra.Core
 {
-    public interface ICassandraRepository
+    public interface ICassandraRepository<TEntity>
     {
         /// <summary>
         /// It asynchronously returns the model based on the ID value
