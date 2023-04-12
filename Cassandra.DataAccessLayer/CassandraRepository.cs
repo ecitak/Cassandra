@@ -34,6 +34,12 @@ namespace Cassandra.DataAccessLayer
         public async Task AddAsync(TEntity entity) => await _session.ExecuteAsync(AddBase(entity));
 
         /// <summary>
+        /// It performs the operation of adding a new record synchronously.
+        /// </summary>
+        /// <param name="entity"></param>
+       public void Add(TEntity entity) => _session.Execute(AddBase(entity));
+
+        /// <summary>
         /// It asynchronously performs the delete operation.
         /// </summary>
         /// <param name="id"></param>
