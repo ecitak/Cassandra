@@ -50,15 +50,21 @@ namespace Cassandra.DataAccessLayer
             return ListSelectBase(result);
         }
 
-        public Task<TEntity> GetByIdAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// It asynchronously performs the operation of adding a new record.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task<TEntity> GetByIdAsync(string id) => SingleOrDefaultBase(await _session.ExecuteAsync(GetBase(id)));
 
-        public Task UpdateAsync(string id, TEntity entity)
-        {
-            throw new NotImplementedException();
-        }
+
+        /// <summary>
+        /// It asynchronously performs the update operation.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public Task UpdateAsync(string id, TEntity entity) => _session.ExecuteAsync(UpdateBase(id, entity));
 
         #region Base
         //The Base region contains common operations that both synchronous and asynchronous operations will execute. 
@@ -113,6 +119,48 @@ namespace Cassandra.DataAccessLayer
                                         r.GetValue<string>("json")
                                     )
                               );
+        }
+
+        /// <summary>
+        /// A query is created that returns the record with the given ID value, and then it is converted to a SimpleStatement object and returned.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private SimpleStatement GetBase(string id)
+        {
+            return new SimpleStatement(
+                                        $"SELECT * FROM {_keyspace}.{typeof(TEntity).Name.ToLower()} WHERE id = ?"
+                                        , id
+                                      );
+        }
+
+        /// <summary>
+        /// It returns a TEntity model from the RowSet? object returned after the ISession execute.
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <returns></returns>
+        private TEntity SingleOrDefaultBase(RowSet? rows)
+        {
+            return JsonConvert
+                   .DeserializeObject<TEntity>
+                   (
+                      rows.SingleOrDefault().GetValue<string>("json")
+                   );
+        }
+
+        /// <summary>
+        /// Query _keyspace, Id ve TEntity ile beraber oluşturulur ve SimpleStatement nesnesine dönüştürülür.
+        /// </summary>
+        /// <param name="id">Update işlemi yapılacak olan row(guid)</param>
+        /// <param name="entity">Update edilmesi istenen değerler TEntity jenerik modelinde eklenir</param>
+        /// <returns></returns>
+        private SimpleStatement UpdateBase(string id, TEntity entity)
+        {
+            return new SimpleStatement(
+                                        $"UPDATE {_keyspace}.{typeof(TEntity).Name.ToLower()} SET JSON ? WHERE id = ?"
+                                        , JObject.FromObject(entity).ToString()
+                                        , id
+                                      );
         }
         #endregion
     }
