@@ -1,4 +1,6 @@
 ﻿using Cassandra.Core;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Cassandra.DataAccessLayer
 {
@@ -24,10 +26,12 @@ namespace Cassandra.DataAccessLayer
                        .Connect(keyspace);
         }
 
-        public Task AddAsync(TEntity entity)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// It asynchronously performs the operation of adding a new record.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task AddAsync(TEntity entity) => await _session.ExecuteAsync(AddBase(entity));
 
         public Task DeleteAsync(string id)
         {
@@ -48,5 +52,22 @@ namespace Cassandra.DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        #region Base
+        //The Base region contains common operations that both synchronous and asynchronous operations will execute. 
+
+        /// <summary>
+        /// The Query is created with _keyspace and TEntity, and converted to a SimpleStatement object.
+        /// </summary>
+        /// <param name="entity">The values to be inserted are added in the generic model TEntity.</param>
+        /// <returns></returns>
+        private SimpleStatement AddBase(TEntity entity)
+        {
+            return new SimpleStatement(
+                                        $"INSERT INTO {_keyspace}.{typeof(TEntity).Name.ToLower()} JSON ?"
+                                        , JObject.FromObject(entity).ToString()
+                                      );
+        }
+        #endregion
     }
 }
