@@ -4,6 +4,21 @@ using Newtonsoft.Json;
 
 namespace Cassandra.DataAccessLayer
 {
+    /// <summary>
+    /// Generic repository created for performing Cassandra database operations
+    /// _keyspace: corresponds to the table name in Cassandra. The reason we specify it when accessing CassandraRepository is the possibility of working with different keyspaces (databases).
+    /// contactPoint: The connection address of Cassandra. (default: localhost)
+    /// _cluster: Establishes the connection with the given connection information.
+    /// _session: The _cluster.Connect method returns an ISession object, and we perform all our operations through the ISession object.
+    ///
+    ///********************
+    /// TEntity: The defined TEntity corresponds to the table name in Cassandra DB.
+    /// The models defined for Cassandra must have the same name as the table names.
+    /// Example: {typeof(TEntity).Name.ToLower()}
+    ///********************
+    ///
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public class CassandraRepository<TEntity> : ICassandraRepository<TEntity>
     {
         private readonly ISession _session;
