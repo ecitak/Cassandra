@@ -62,5 +62,9 @@
         /// <param name="entity"></param>
         void Update(string id, TEntity entity);
 
+        /// <summary>
+        /// After the operations are completed, the _session and _cluster processes are terminated.
+        /// </summary>
+        void Dispose();
     }
 }

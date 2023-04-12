@@ -91,6 +91,15 @@ namespace Cassandra.DataAccessLayer
         /// <param name="entity"></param>
         public void Update(string id, TEntity entity) => _session.Execute(UpdateBase(id, entity));
 
+        /// <summary>
+        /// After the operations are completed, the _session and _cluster processes are terminated.
+        /// </summary>
+        public void Dispose()
+        {
+            _session.Dispose();
+            _cluster.Dispose();
+        }
+
         #region Base
         //The Base region contains common operations that both synchronous and asynchronous operations will execute. 
 
