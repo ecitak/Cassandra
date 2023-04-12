@@ -40,9 +40,14 @@ namespace Cassandra.DataAccessLayer
         /// <returns></returns>
         public async Task DeleteAsync(string id) => await _session.ExecuteAsync(DeleteBase(id));
 
-        public Task<IEnumerable<TEntity>> GetAllAsync()
+        /// <summary>
+        /// It asynchronously returns all records as IEnumerable<TEntity>
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var result = await _session.ExecuteAsync(ListBase());
+            return ListSelectBase(result);
         }
 
         public Task<TEntity> GetByIdAsync(string id)
@@ -82,6 +87,32 @@ namespace Cassandra.DataAccessLayer
                                         $"DELETE FROM {_keyspace}.{typeof(TEntity).Name.ToLower()} WHERE id = ?"
                                         , id
                                       );
+        }
+
+        /// <summary>
+        /// It returns all values in the table with the given _keyspace and TEntity.
+        /// </summary>
+        /// <returns></returns>
+        private SimpleStatement ListBase()
+        {
+            return new SimpleStatement($"SELECT * FROM {_keyspace}.{typeof(TEntity).Name.ToLower()}");
+        }
+
+        /// <summary>
+        /// It returns a list of TEntity from the RowSet? object returned after the ISession execute.
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <returns></returns>
+        private IEnumerable<TEntity> ListSelectBase(RowSet? rows)
+        {
+            return rows.Select(
+                                    r =>
+                                    JsonConvert
+                                    .DeserializeObject<TEntity>
+                                    (
+                                        r.GetValue<string>("json")
+                                    )
+                              );
         }
         #endregion
     }
