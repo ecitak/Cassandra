@@ -33,10 +33,12 @@ namespace Cassandra.DataAccessLayer
         /// <returns></returns>
         public async Task AddAsync(TEntity entity) => await _session.ExecuteAsync(AddBase(entity));
 
-        public Task DeleteAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// It asynchronously performs the delete operation.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(string id) => await _session.ExecuteAsync(DeleteBase(id));
 
         public Task<IEnumerable<TEntity>> GetAllAsync()
         {
@@ -66,6 +68,19 @@ namespace Cassandra.DataAccessLayer
             return new SimpleStatement(
                                         $"INSERT INTO {_keyspace}.{typeof(TEntity).Name.ToLower()} JSON ?"
                                         , JObject.FromObject(entity).ToString()
+                                      );
+        }
+
+        /// <summary>
+        /// To delete the record with the given ID value, it is converted to a SimpleStatement object and sent to the ISession.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private SimpleStatement DeleteBase(string id)
+        {
+            return new SimpleStatement(
+                                        $"DELETE FROM {_keyspace}.{typeof(TEntity).Name.ToLower()} WHERE id = ?"
+                                        , id
                                       );
         }
         #endregion
