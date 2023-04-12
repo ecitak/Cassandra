@@ -23,6 +23,12 @@
         Task DeleteAsync(string id);
 
         /// <summary>
+        /// It performs the operation of deleting a record synchronously.
+        /// </summary>
+        /// <param name="id"></param>
+        void Delete(string id);
+
+        /// <summary>
         /// It asynchronously returns all records as IEnumerable<TEntity>
         /// </summary>
         /// <returns></returns>

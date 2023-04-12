@@ -47,6 +47,12 @@ namespace Cassandra.DataAccessLayer
         public async Task DeleteAsync(string id) => await _session.ExecuteAsync(DeleteBase(id));
 
         /// <summary>
+        /// It performs the operation of deleting a record synchronously.
+        /// </summary>
+        /// <param name="id"></param>
+        public void Delete(string id) => _session.Execute(DeleteBase(id));
+
+        /// <summary>
         /// It asynchronously returns all records as IEnumerable<TEntity>
         /// </summary>
         /// <returns></returns>
